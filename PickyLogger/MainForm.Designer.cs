@@ -1,5 +1,4 @@
-﻿
-namespace PickyLogger
+﻿namespace PickyLogger
 {
     partial class MainForm
     {
@@ -29,6 +28,7 @@ namespace PickyLogger
         /// </summary>
         private void InitializeComponent()
         {
+            this.Icon = Properties.Resources.pick_list;
             btnSelectFiles = new Button();
             lstSelectedFiles = new ListBox();
             txtFilterString = new TextBox();
@@ -39,16 +39,19 @@ namespace PickyLogger
             btnSelectSavePath = new Button();
             labelSaveTo = new Label();
             txtSavePath = new TextBox();
+            btnOpenSavePath = new Button();
             SuspendLayout();
             // 
             // btnSelectFiles
             // 
+            btnSelectFiles.BackColor = Color.LightSteelBlue;
+            btnSelectFiles.ForeColor = Color.DimGray;
             btnSelectFiles.Location = new Point(12, 12);
             btnSelectFiles.Name = "btnSelectFiles";
             btnSelectFiles.Size = new Size(150, 46);
             btnSelectFiles.TabIndex = 0;
             btnSelectFiles.Text = "Select Files";
-            btnSelectFiles.UseVisualStyleBackColor = true;
+            btnSelectFiles.UseVisualStyleBackColor = false;
             btnSelectFiles.Click += btnSelectFiles_Click;
             // 
             // lstSelectedFiles
@@ -57,7 +60,7 @@ namespace PickyLogger
             lstSelectedFiles.HorizontalScrollbar = true;
             lstSelectedFiles.Location = new Point(12, 64);
             lstSelectedFiles.Name = "lstSelectedFiles";
-            lstSelectedFiles.Size = new Size(838, 164);
+            lstSelectedFiles.Size = new Size(838, 132);
             lstSelectedFiles.TabIndex = 1;
             // 
             // txtFilterString
@@ -69,16 +72,20 @@ namespace PickyLogger
             // 
             // btnExecute
             // 
+            btnExecute.BackColor = Color.LightSteelBlue;
+            btnExecute.ForeColor = Color.DimGray;
             btnExecute.Location = new Point(13, 452);
             btnExecute.Name = "btnExecute";
             btnExecute.Size = new Size(150, 46);
             btnExecute.TabIndex = 4;
             btnExecute.Text = "Execute";
-            btnExecute.UseVisualStyleBackColor = true;
+            btnExecute.UseVisualStyleBackColor = false;
             btnExecute.Click += btnExecute_Click;
             // 
             // txtLog
             // 
+            txtLog.BackColor = SystemColors.Window;
+            txtLog.BorderStyle = BorderStyle.FixedSingle;
             txtLog.Location = new Point(11, 536);
             txtLog.Multiline = true;
             txtLog.Name = "txtLog";
@@ -107,12 +114,14 @@ namespace PickyLogger
             // 
             // btnSelectSavePath
             // 
+            btnSelectSavePath.BackColor = Color.LightSteelBlue;
+            btnSelectSavePath.ForeColor = Color.DimGray;
             btnSelectSavePath.Location = new Point(12, 320);
             btnSelectSavePath.Name = "btnSelectSavePath";
             btnSelectSavePath.Size = new Size(222, 46);
             btnSelectSavePath.TabIndex = 10;
             btnSelectSavePath.Text = "Select Save Path";
-            btnSelectSavePath.UseVisualStyleBackColor = true;
+            btnSelectSavePath.UseVisualStyleBackColor = false;
             btnSelectSavePath.Click += btnSelectSavePath_Click;
             // 
             // labelSaveTo
@@ -126,6 +135,7 @@ namespace PickyLogger
             // 
             // txtSavePath
             // 
+            txtSavePath.BackColor = SystemColors.Window;
             txtSavePath.Location = new Point(196, 383);
             txtSavePath.Name = "txtSavePath";
             txtSavePath.ReadOnly = true;
@@ -133,11 +143,25 @@ namespace PickyLogger
             txtSavePath.Size = new Size(654, 39);
             txtSavePath.TabIndex = 12;
             // 
+            // btnOpenSavePath
+            // 
+            btnOpenSavePath.BackColor = Color.LightSteelBlue;
+            btnOpenSavePath.ForeColor = Color.DimGray;
+            btnOpenSavePath.Location = new Point(240, 320);
+            btnOpenSavePath.Name = "btnOpenSavePath";
+            btnOpenSavePath.Size = new Size(222, 46);
+            btnOpenSavePath.TabIndex = 13;
+            btnOpenSavePath.Text = "Open Save Path";
+            btnOpenSavePath.UseVisualStyleBackColor = false;
+            btnOpenSavePath.Click += btnOpenSavePath_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(14F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Gainsboro;
             ClientSize = new Size(874, 721);
+            Controls.Add(btnOpenSavePath);
             Controls.Add(txtSavePath);
             Controls.Add(labelSaveTo);
             Controls.Add(btnSelectSavePath);
@@ -165,5 +189,6 @@ namespace PickyLogger
         private Button btnSelectSavePath;
         private Label labelSaveTo;
         private TextBox txtSavePath;
+        private Button btnOpenSavePath;
     }
 }

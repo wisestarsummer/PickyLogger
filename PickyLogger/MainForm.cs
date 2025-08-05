@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices; // 꼭 추가해야 함
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices; // 꼭 추가해야 함
 
 
 
@@ -20,26 +21,21 @@ namespace PickyLogger
 
 
             string lastFolder = Properties.Settings.Default.LastOpenFolder;
-            
+
             if (!string.IsNullOrEmpty(lastFolder) && Directory.Exists(lastFolder))
             {
                 openFileDialog.InitialDirectory = lastFolder;
             }
-            
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 lstSelectedFiles.Items.Clear();
                 lstSelectedFiles.Items.AddRange(openFileDialog.FileNames);
-                //// 마지막 항목까지 자동 스크롤
-                //if (lstSelectedFiles.Items.Count > 0)
-                //{
-                //    lstSelectedFiles.TopIndex = lstSelectedFiles.Items.Count - 1;
-                //}
                 ScrollListBoxToEnd(lstSelectedFiles);
 
                 // 설정에 폴더 저장 후 저장
                 string folder = Path.GetDirectoryName(openFileDialog.FileName);
-                Properties.Settings.Default.LastSaveFolder = folder;
+                Properties.Settings.Default.LastOpenFolder = folder;
                 Properties.Settings.Default.Save();
             }
         }
@@ -53,7 +49,7 @@ namespace PickyLogger
 
             // 이전에 저장된 폴더를 불러와 초기 경로 지정
             string lastFolder = Properties.Settings.Default.LastSaveFolder;
-            
+
             if (!string.IsNullOrEmpty(lastFolder) && Directory.Exists(lastFolder))
             {
                 saveFileDialog.InitialDirectory = lastFolder;
@@ -62,7 +58,7 @@ namespace PickyLogger
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 txtSavePath.Text = saveFileDialog.FileName;
-                
+
                 // 커서를 끝으로 이동 + 스크롤
                 txtSavePath.SelectionStart = txtSavePath.Text.Length;
                 txtSavePath.ScrollToCaret();
@@ -161,6 +157,38 @@ namespace PickyLogger
             catch (Exception ex)
             {
                 txtLog.AppendText("❌ Error: " + ex.Message + Environment.NewLine);
+            }
+        }
+
+        private void btnOpenSavePath_Click(object sender, EventArgs e)
+        {
+            OpenDirectoryFromTextBox(txtSavePath);
+        }
+
+        private void OpenDirectoryFromTextBox(TextBox txtSavePath)
+        {
+            string path = txtSavePath.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                MessageBox.Show("저장 경로가 비어 있습니다.", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (File.Exists(path))
+            {
+                try
+                {
+                    Process.Start("explorer.exe", path);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"폴더를 여는 중 오류가 발생했습니다.\n\n{ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("경로가 존재하지 않습니다.", "경고", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
