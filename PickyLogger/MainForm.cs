@@ -1,12 +1,20 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices; // 꼭 추가해야 함
 
-
-
 namespace PickyLogger
 {
     public partial class MainForm : Form
     {
+        // Win32 API 선언
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        // 메시지 상수 정의
+        private const int LB_SETHORIZONTALEXTENT = 0x0194;
+
+        private const int WM_HSCROLL = 0x0114;
+        private const int SB_RIGHT = 7;
+
         public MainForm()
         {
             InitializeComponent();
@@ -18,7 +26,6 @@ namespace PickyLogger
             openFileDialog.Multiselect = true;
             openFileDialog.Filter = "Text and Log Files (*.txt;*.log)|*.txt;*.log|All Files (*.*)|*.*";
             openFileDialog.Title = "Select Input Files";
-
 
             string lastFolder = Properties.Settings.Default.LastOpenFolder;
 
@@ -70,15 +77,6 @@ namespace PickyLogger
             }
         }
 
-        // Win32 API 선언
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-
-        // 메시지 상수 정의
-        private const int LB_SETHORIZONTALEXTENT = 0x0194;
-        private const int WM_HSCROLL = 0x0114;
-        private const int SB_RIGHT = 7;
-
         private void ScrollListBoxToEnd(ListBox listBox)
         {
             if (listBox.Items.Count == 0)
@@ -109,6 +107,14 @@ namespace PickyLogger
         private void btnExecute_Click(object sender, EventArgs e)
         {
             txtLog.Clear();
+
+            string input = txtFilterString.Text;
+
+            string[] filters = input
+                .Split(["\r\n", "\r", "\n"], StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => s.Trim())
+                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .ToArray();
 
             string filter = txtFilterString.Text;
             string outputPath = txtSavePath.Text;
@@ -141,7 +147,7 @@ namespace PickyLogger
                         txtLog.AppendText($"Processing: {file}{Environment.NewLine}");
 
                         var lines = File.ReadAllLines(file)
-                                        .Where(line => line.Contains(filter));
+                                        .Where(line => filters.Any(filter => line.Contains(filter)));
 
                         foreach (var line in lines)
                         {
