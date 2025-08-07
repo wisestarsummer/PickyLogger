@@ -16,8 +16,7 @@
 ---
 
 ## 🖥️ 사용자 인터페이스
-
-<img width="878" height="782" alt="image" src="https://github.com/user-attachments/assets/5da8268a-cf75-4f9c-b46e-06ae4ea90a4b" />
+<img width="878" height="906" alt="image" src="https://github.com/user-attachments/assets/0101a114-a4e6-4d2d-8b28-01c004e337a3" />
 
 ---
 
@@ -31,6 +30,13 @@
 
 ### 3. 필터 입력
 `Filter String` 입력란에 검색할 문자열을 입력하세요.
+- **여러 문자열을 동시에 검색**하고 싶다면, 각 문자열을 줄바꿈(Enter)으로 구분하여 입력하면 됩니다.
+- 예:  아래와 같이 입력하면, `error`, `warning`, `timeout` 중 하나라도 포함하는 모든 줄이 필터링됩니다.  
+```
+error  
+warning  
+timeout
+```
 
 ### 4. 저장 경로 지정
 - `Select Save Path` 버튼을 눌러 결과를 저장할 파일의 경로를 지정합니다.
@@ -48,7 +54,7 @@
 
 릴리즈 페이지에서 최신 버전을 다운로드하세요:  
 [🔗 GitHub Releases](https://github.com/wisestarsummer/PickyLogger/releases)  
-→ `.zip` 또는 `.exe` 다운로드 후 압축 해제 및 실행
+→ `.zip` 다운로드 후 압축 해제 및 `.exe` 실행
 
 ---
 
